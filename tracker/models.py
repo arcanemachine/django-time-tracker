@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
+
 
 class Activity(models.Model):
     name = models.CharField(max_length=255)
@@ -10,12 +12,20 @@ class Activity(models.Model):
     def __str__(self):
         return self.name
 
-class Timer(models.Model):
-    activity = models.ForeignKey('Activity', on_delete=models.CASCADE)
+#class TodayTimerManager(models.Manager):
+#    def get_queryset(self):
+#
 
-    start_timestamp = models.DateTimeField(default=timezone.now)
-    stop_timestamp = models.DateTimeField(blank=True, null=True)
-    pause_timestamp = models.DateTimeField(blank=True, null=True)
+
+class Timer(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
+    activity = models.ForeignKey(
+        'Activity', default=1, on_delete=models.CASCADE)
+
+    start_time = models.DateTimeField()
+    stop_time = models.DateTimeField(blank=True, null=True)
+    last_update_time = models.DateTimeField(blank=True, null=True)
     run_seconds = models.IntegerField(default=0)
     pause_seconds = models.IntegerField(default=0)
 
@@ -56,17 +66,86 @@ class Timer(models.Model):
         seconds = self.get_formatted_seconds(elapsed_seconds)
         return f"{days}{hours}:{minutes}:{seconds}"
 
-    def get_run_time(self):
-        return self.get_formatted_time(self.run_seconds)
+    def get_time_since_last_update(self):
+        current_time = timezone.now()
+        if self.stop_time:
+            return None
+        elif self.last_update_time:
+            return self.get_formatted_time(
+                (current_time - self.last_update_time).total_seconds())
+        else:
+            return self.get_formatted_time(
+                (current_time - self.start_time).total_seconds())
 
-    def get_pause_time(self):
-        return self.get_formatted_time(self.pause_seconds)
+    def get_run_time(self, formatted=True):
+        current_time = timezone.now()
+        if not self.last_update_time:
+            return self.get_formatted_time(
+                (current_time - self.start_time).total_seconds())
+        elif self.is_paused:
+            return self.get_formatted_time(self.run_seconds)
+        else:
+            seconds_since_timer_resumed = \
+                (current_time - self.last_update_time).total_seconds()
+            return self.get_formatted_time(
+                self.run_seconds + seconds_since_timer_resumed)
+
+    def get_pause_time(self, formatted=True):
+        current_time = timezone.now()
+        if self.is_paused:
+            return self.get_formatted_time(
+                (current_time - self.last_update_time).total_seconds())
+        else:
+            return self.get_formatted_time(self.pause_seconds)
+
+    def get_timer_state(self):
+        time_since_last_update = self.get_time_since_last_update()
+        current_state = f"current run time: {time_since_last_update}"
+        if self.is_paused:
+            current_state = f"current pause time: {time_since_last_update}"
+        if self.stop_time:
+            current_state = "stopped"
+        return current_state
+
+    def pause(self):
+        self.is_paused = True
+
+        if not self.last_update_time:
+            current_time = timezone.now()
+            elapsed_time = \
+                (current_time - self.start_time).total_seconds()
+        elif self.last_update_time:
+            current_time = timezone.now()
+            elapsed_time = \
+                (current_time - self.last_update_time).total_seconds()
+
+        self.run_seconds += elapsed_time
+        self.last_update_time = current_time
+        self.save()
+
+    def stop(self):
+        self.last_update_time = timezone.now()
+        self.stop_time = self.last_update_time
+        self.save()
+
+    def resume(self):
+        if not self.is_paused:
+            return None
+
+        current_time = timezone.now()
+        elapsed_time = (current_time - self.last_update_time).total_seconds()
+
+        self.pause_seconds += elapsed_time
+        self.last_update_time = current_time
+        self.is_paused = False
+        self.save()
 
     def __str__(self):
-        current_state = "running"
-        if self.is_paused:
-            current_state = "paused"
-        if self.stop_timestamp:
-            current_state = "stopped"
         return f"{self.activity.name} - "\
-               f"{self.get_run_time()} ({current_state})"
+            f"Running: {self.get_run_time()}, "\
+            f"Paused: {self.get_pause_time()}, "\
+            f"({self.get_timer_state()})"
+
+    def save(self, *args, **kwargs):
+        self.start_time = timezone.now()
+        super().save(*args, **kwargs)

@@ -4,6 +4,8 @@ from django.utils import timezone
 
 
 class Activity(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
     class Meta:
@@ -12,14 +14,8 @@ class Activity(models.Model):
     def __str__(self):
         return self.name
 
-#class TodayTimerManager(models.Manager):
-#    def get_queryset(self):
-#
-
 
 class Timer(models.Model):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
     activity = models.ForeignKey(
         'Activity', default=1, on_delete=models.CASCADE)
 

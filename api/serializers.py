@@ -1,6 +1,13 @@
 from rest_framework import serializers
 
+from accounts.models import TimerUser
 from tracker.models import Activity, Timer
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TimerUser
+        fields = ['id', 'username', 'timezone']
 
 
 class ActivitySerializer(serializers.ModelSerializer):

@@ -66,6 +66,11 @@ class Timer(models.Model):
         seconds = self.get_formatted_seconds(elapsed_seconds)
         return f"{days}{hours}:{minutes}:{seconds}"
 
+    def get_localized_time(self, time):
+        if self.user.timezone is not None:
+            return time.astimezone(self.user.timezone)
+        return time
+
     def get_time_since_last_update(self):
         current_time = timezone.now()
         if self.stop_time:

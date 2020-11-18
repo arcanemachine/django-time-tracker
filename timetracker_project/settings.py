@@ -34,8 +34,10 @@ INSTALLED_APPS = [
     # local apps
     'api.apps.ApiConfig',
     'tracker.apps.TrackerConfig',
+    'accounts.apps.AccountsConfig',
     # third-party apps
     'rest_framework',
+    'timezone_field',
 ]
 
 MIDDLEWARE= [
@@ -121,3 +123,6 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny'],
 }
+
+# users
+AUTH_USER_MODEL = 'accounts.TimerUser'

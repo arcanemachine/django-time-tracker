@@ -7,6 +7,7 @@ name = "pypi"
 Django = "*"
 ipython = "*"
 djangorestframework = "*"
+django-timezone-field = "*"
 
 [dev-packages]
 

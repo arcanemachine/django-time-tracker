@@ -27,4 +27,16 @@ urlpatterns = [
          '<int:timer_pk>/',
          views.TimerDetail.as_view(),
          name='timer_detail'),
+    path('users/<int:user_pk>/activities/<int:activity_pk>/timers/'
+         '<int:timer_pk>/pause/',
+         views.TimerPause.as_view(),
+         name='timer_pause'),
+    path('users/<int:user_pk>/activities/<int:activity_pk>/timers/'
+         '<int:timer_pk>/resume/',
+         views.TimerResume.as_view(),
+         name='timer_resume'),
+    path('users/<int:user_pk>/activities/<int:activity_pk>/timers/'
+         '<int:timer_pk>/stop/',
+         views.TimerStop.as_view(),
+         name='timer_stop'),
 ]

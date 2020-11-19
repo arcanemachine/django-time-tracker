@@ -46,32 +46,85 @@ class TimerCreate(APIView):
 
     def get(self, request, *args, **kwargs):
         activity = get_object_or_404(Activity, pk=self.kwargs['activity_pk'])
-        timers = Timer.objects.filter(activity=activity)
+        running_timer = Timer.objects.filter(activity=activity)
 
-        if timers.exists() and timers.last().stop_time is None:
+        if running_timer.exists() and running_timer.last().stop_time is None:
             return Response({
+                "id": running_timer.pk,
+                "status_code": "fail",
                 "message":
-                    "Please stop your last timer before starting a new one."})
+                    "Please stop the previous timer first."})
         else:
             timer = Timer.objects.create(activity=activity)
             return Response({
                 "id": timer.pk,
+                "status_code": "success",
                 "message": f"New '{timer.activity.name}' timer started"})
 
 
-class TimerPause(APIView):
+class TimerPause(generics.GenericAPIView):
     serializer_class = serializers.TimerSerializer
 
     def get(self, request, *args, **kwargs):
-        activity = get_object_or_404(Activity, pk=self.kwargs['activity_pk'])
-        timers = Timer.objects.filter(activity=activity)
-
-        if timers.exists() and timers.last().stop_time is None:
+        self.timer = self.get_object()
+        if self.timer.is_stopped():
             return Response({
-                "message":
-                    "Please stop your last timer before starting a new one."})
+                "id": self.timer.id,
+                "status_code": "fail",
+                "message": "This timer has already been stopped."})
+        if self.timer.is_paused():
+            return Response({
+                "id": self.timer.id,
+                "status_code": "fail",
+                "message": "This timer is already paused."})
         else:
-            timer = Timer.objects.create(activity=activity)
+            self.timer.pause()
             return Response({
-                "id": timer.pk,
-                "message": f"New '{timer.activity.name}' timer started"})
+                "id": self.timer.id,
+                "status_code": "success",
+                "message": "Timer paused"})
+
+    def get_object(self):
+        return Timer.objects.get(pk=self.kwargs['timer_pk'])
+
+
+class TimerResume(generics.GenericAPIView):
+    serializer_class = serializers.TimerSerializer
+
+    def get(self, request, *args, **kwargs):
+        self.timer = self.get_object()
+        if self.timer.is_running:
+            return Response({
+                "id": self.timer.id,
+                "status_code": "fail",
+                "message": "This timer is already running."})
+        elif self.timer.is_paused() or self.timer.is_stopped():
+            self.timer.resume()
+            return Response({
+                "id": self.timer.id,
+                "status_code": "success",
+                "message": "Timer resumed"})
+
+    def get_object(self):
+        return Timer.objects.get(pk=self.kwargs['timer_pk'])
+
+
+class TimerStop(generics.GenericAPIView):
+    serializer_class = serializers.TimerSerializer
+
+    def get(self, request, *args, **kwargs):
+        self.timer = self.get_object()
+        if self.timer.is_stopped():
+            return Response({
+                "id": self.timer.id,
+                "status_code": "fail",
+                "message": "This timer is already stopped."})
+        elif self.timer.is_running or self.timer.is_paused():
+            self.timer.stop()
+            return Response({
+                "id": self.timer.id,
+                "status_code": "success",
+                "message": "Timer stopped"})
+
+    def get_object(self):
+        return Timer.objects.get(pk=self.kwargs['timer_pk'])

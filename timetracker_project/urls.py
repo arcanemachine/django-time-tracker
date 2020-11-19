@@ -6,6 +6,8 @@ from . import views
 
 urlpatterns = [
     path('', views.hello_world, name='root'),
+    path('csv/', views.csv_download, name='csv_download'),
+    path('csv/<int:timer_pk>/', views.csv_download, name='csv_download_item'),
     path('admin/', admin.site.urls),
     path('api/v1/', include('api.urls')),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

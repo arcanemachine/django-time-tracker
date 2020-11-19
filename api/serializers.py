@@ -8,14 +8,14 @@ from tracker.models import Activity, Timer
 class TimerUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = TimerUser
-        fields = ['id', 'username', 'timezone']
+        fields = ['id', 'username']#, 'timezone']
         read_only_fields = ['username']
 
     def to_representation(self, instance):
         return {
             'id': instance.id,
             'username': instance.username,
-            'timezone': instance.timezone.zone,
+            #'timezone': instance.timezone.zone,
             }
 
 

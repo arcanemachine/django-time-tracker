@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'tracker.apps.TrackerConfig',
     'accounts.apps.AccountsConfig',
     # third-party apps
+    'drf_spectacular',
     'rest_framework',
     'timezone_field',
 ]
@@ -107,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Canada/Mountain'
 
 USE_I18N = True
 
@@ -123,6 +124,7 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny'],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # users

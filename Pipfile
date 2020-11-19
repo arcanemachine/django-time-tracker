@@ -9,6 +9,7 @@ ipython = "*"
 djangorestframework = "*"
 django-timezone-field = "*"
 PyYAML = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 

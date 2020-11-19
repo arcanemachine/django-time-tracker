@@ -21,7 +21,7 @@ urlpatterns = [
          views.TimerList.as_view(),
          name='timer_list'),
     path('users/<int:user_pk>/activities/<int:activity_pk>/timers/new/',
-         views.timer_create,
+         views.TimerCreate.as_view(),
          name='timer_create'),
     path('users/<int:user_pk>/activities/<int:activity_pk>/timers/'
          '<int:timer_pk>/',

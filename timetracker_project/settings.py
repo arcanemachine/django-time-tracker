@@ -127,5 +127,15 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
+# api
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Yet Another Time Tracker',
+    'CONTACT': {
+        'name': 'Nicholas Moen',
+    },
+    'LICENSE': {'name': 'MIT License'},
+    'VERSION': '0.0.l',
+}
+
 # users
 AUTH_USER_MODEL = 'accounts.TimerUser'

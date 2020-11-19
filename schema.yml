@@ -1,0 +1,686 @@
+openapi: 3.0.3
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /api/v1/users/:
+    get:
+      operationId: api_v1_users_list
+      description: ''
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimerUser'
+          description: ''
+  /api/v1/users/{user_pk}/:
+    get:
+      operationId: api_v1_users_retrieve
+      description: ''
+      parameters:
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimerUser'
+          description: ''
+    put:
+      operationId: api_v1_users_update
+      description: ''
+      parameters:
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimerUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TimerUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TimerUser'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimerUser'
+          description: ''
+    patch:
+      operationId: api_v1_users_partial_update
+      description: ''
+      parameters:
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTimerUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTimerUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTimerUser'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimerUser'
+          description: ''
+    delete:
+      operationId: api_v1_users_destroy
+      description: ''
+      parameters:
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/v1/users/{user_pk}/activities/:
+    get:
+      operationId: api_v1_users_activities_list
+      description: ''
+      parameters:
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+          description: ''
+    post:
+      operationId: api_v1_users_activities_create
+      description: ''
+      parameters:
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Activity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Activity'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+          description: ''
+  /api/v1/users/{user_pk}/activities/{activity_pk}/:
+    get:
+      operationId: api_v1_users_activities_retrieve
+      description: ''
+      parameters:
+      - in: path
+        name: activity_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+          description: ''
+    put:
+      operationId: api_v1_users_activities_update
+      description: ''
+      parameters:
+      - in: path
+        name: activity_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Activity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Activity'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+          description: ''
+    patch:
+      operationId: api_v1_users_activities_partial_update
+      description: ''
+      parameters:
+      - in: path
+        name: activity_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedActivity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedActivity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedActivity'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+          description: ''
+    delete:
+      operationId: api_v1_users_activities_destroy
+      description: ''
+      parameters:
+      - in: path
+        name: activity_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/v1/users/{user_pk}/activities/{activity_pk}/timers/:
+    get:
+      operationId: api_v1_users_activities_timers_list
+      description: ''
+      parameters:
+      - in: path
+        name: activity_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Timer'
+          description: ''
+    post:
+      operationId: api_v1_users_activities_timers_create
+      description: ''
+      parameters:
+      - in: path
+        name: activity_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Timer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Timer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Timer'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timer'
+          description: ''
+  /api/v1/users/{user_pk}/activities/{activity_pk}/timers/{timer_pk}/:
+    get:
+      operationId: api_v1_users_activities_timers_retrieve
+      description: ''
+      parameters:
+      - in: path
+        name: activity_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: timer_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timer'
+          description: ''
+    put:
+      operationId: api_v1_users_activities_timers_update
+      description: ''
+      parameters:
+      - in: path
+        name: activity_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: timer_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Timer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Timer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Timer'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timer'
+          description: ''
+    patch:
+      operationId: api_v1_users_activities_timers_partial_update
+      description: ''
+      parameters:
+      - in: path
+        name: activity_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: timer_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTimer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTimer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTimer'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timer'
+          description: ''
+    delete:
+      operationId: api_v1_users_activities_timers_destroy
+      description: ''
+      parameters:
+      - in: path
+        name: activity_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: timer_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/v1/users/{user_pk}/activities/{activity_pk}/timers/new/:
+    get:
+      operationId: api_v1_users_activities_timers_new_retrieve
+      description: ''
+      parameters:
+      - in: path
+        name: activity_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timer'
+          description: ''
+components:
+  schemas:
+    Activity:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+      required:
+      - id
+      - name
+    PatchedActivity:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+    PatchedTimer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        activity:
+          type: integer
+          readOnly: true
+        start_time:
+          type: string
+          format: date-time
+          readOnly: true
+        stop_time:
+          type: string
+          format: date-time
+          readOnly: true
+        last_update_time:
+          type: string
+          format: date-time
+          readOnly: true
+        run_seconds:
+          type: integer
+          readOnly: true
+        pause_seconds:
+          type: integer
+          readOnly: true
+        is_paused:
+          type: boolean
+          readOnly: true
+    PatchedTimerUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+    Timer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        activity:
+          type: integer
+          readOnly: true
+        start_time:
+          type: string
+          format: date-time
+          readOnly: true
+        stop_time:
+          type: string
+          format: date-time
+          readOnly: true
+        last_update_time:
+          type: string
+          format: date-time
+          readOnly: true
+        run_seconds:
+          type: integer
+          readOnly: true
+        pause_seconds:
+          type: integer
+          readOnly: true
+        is_paused:
+          type: boolean
+          readOnly: true
+      required:
+      - activity
+      - id
+      - is_paused
+      - last_update_time
+      - pause_seconds
+      - run_seconds
+      - start_time
+      - stop_time
+    TimerUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+      required:
+      - id
+      - username
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: Session

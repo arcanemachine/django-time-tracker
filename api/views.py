@@ -7,6 +7,15 @@ from . import serializers
 from accounts.models import TimerUser
 from tracker.models import Activity, Timer
 
+class PingPongView(generics.GenericAPIView):
+    serializer_class = None
+
+    def get(self, request, *args, **kwargs):
+        return Response({"message": "Pong!"})
+
+    def post(self, request, *args, **kwargs):
+        return Response({"message": f"You said 'f{request.POST['message']}'"})
+
 
 class UserList(generics.ListAPIView):
     serializer_class = serializers.TimerUserSerializer

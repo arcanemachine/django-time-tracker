@@ -10,6 +10,7 @@ djangorestframework = "*"
 django-timezone-field = "*"
 PyYAML = "*"
 drf-spectacular = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 

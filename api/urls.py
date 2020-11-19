@@ -5,6 +5,9 @@ from . import views
 app_name = 'api'
 
 urlpatterns = [
+    path('ping/',
+         views.PingPongView.as_view(),
+         name='ping_pong'),
     path('users/',
          views.UserList.as_view(),
          name='user_list'),

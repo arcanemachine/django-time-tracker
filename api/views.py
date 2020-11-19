@@ -9,13 +9,14 @@ from tracker.models import Activity, Timer
 
 
 class UserList(generics.ListAPIView):
-    serializer_class = serializers.ActivitySerializer
+    serializer_class = serializers.TimerUserSerializer
     queryset = TimerUser.objects.all() 
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = serializers.ActivitySerializer
+    serializer_class = serializers.TimerUserSerializer
     queryset = TimerUser.objects.all() 
+    lookup_url_kwarg = 'user_pk'
 
 
 class ActivityList(generics.ListCreateAPIView):
@@ -37,6 +38,7 @@ class TimerList(generics.ListCreateAPIView):
 class TimerDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.TimerSerializer
     queryset = Timer.objects.all() 
+    lookup_url_kwarg = 'timer_pk'
 
 @api_view(['POST'])
 def create_timer(request, user_pk, activity_pk):

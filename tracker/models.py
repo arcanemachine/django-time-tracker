@@ -144,7 +144,7 @@ class Timer(models.Model):
     def __str__(self):
         return f"{self.activity.name} - "\
             f"Running: {self.get_run_time()}, "\
-            f"Paused: {self.get_pause_time()}, "\
+            f"Paused: {self.get_pause_time()} "\
             f"({self.get_timer_state()})"
 
     def save(self, *args, **kwargs):

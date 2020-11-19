@@ -8,6 +8,7 @@ Django = "*"
 ipython = "*"
 djangorestframework = "*"
 django-timezone-field = "*"
+PyYAML = "*"
 
 [dev-packages]
 

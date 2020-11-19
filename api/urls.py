@@ -12,7 +12,7 @@ urlpatterns = [
          views.UserDetail.as_view(),
          name='user_detail'),
     path('users/<int:user_pk>/activities/',
-         views.ActivityDetail.as_view(),
+         views.ActivityList.as_view(),
          name='activity_list'),
     path('users/<int:user_pk>/activities/<int:activity_pk>/',
          views.ActivityDetail.as_view(),
@@ -20,6 +20,9 @@ urlpatterns = [
     path('users/<int:user_pk>/activities/<int:activity_pk>/timers/',
          views.TimerList.as_view(),
          name='timer_list'),
+    path('users/<int:user_pk>/activities/<int:activity_pk>/timers/new/',
+         views.timer_create,
+         name='timer_create'),
     path('users/<int:user_pk>/activities/<int:activity_pk>/timers/'
          '<int:timer_pk>/',
          views.TimerDetail.as_view(),

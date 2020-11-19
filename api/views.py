@@ -40,8 +40,8 @@ class TimerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Timer.objects.all() 
     lookup_url_kwarg = 'timer_pk'
 
-@api_view(['POST'])
-def create_timer(request, user_pk, activity_pk):
+@api_view(['GET'])
+def timer_create(request, user_pk, activity_pk):
     newest_timer = Timer.objects.filter(activity__pk=activity_pk)
     if newest_timer.exists() and newest_timer.last().stop_time is None:
         return Response({

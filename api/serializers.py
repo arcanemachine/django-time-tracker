@@ -28,9 +28,9 @@ class ActivitySerializer(serializers.ModelSerializer):
 class TimerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Timer
-        fields = ['id', 'activity', 'start_timestamp', 'stop_timestamp',
-                  'pause_timestamp', 'run_seconds', 'pause_seconds',
+        fields = ['id', 'activity', 'start_time', 'stop_time',
+                  'last_update_time', 'run_seconds', 'pause_seconds',
                   'is_paused']
         read_only_fields = [
-            'activity', 'start_timestamp', 'stop_timestamp', 'pause_timestamp',
+            'activity', 'start_time', 'stop_time', 'last_update_time',
             'run_seconds', 'pause_seconds', 'is_paused']

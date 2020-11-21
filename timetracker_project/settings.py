@@ -129,7 +129,13 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-# api
+# corsheaders
+CORS_ALLOW_ALL_ORIGINS = True
+
+# users
+AUTH_USER_MODEL = 'accounts.TimerUser'
+
+# rest_framework
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Yet Another Time Tracker',
     'CONTACT': {
@@ -138,6 +144,3 @@ SPECTACULAR_SETTINGS = {
     'LICENSE': {'name': 'MIT License'},
     'VERSION': '0.0.l',
 }
-
-# users
-AUTH_USER_MODEL = 'accounts.TimerUser'

@@ -1,5 +1,6 @@
 import csv
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 
 from tracker.models import Timer
 
@@ -19,12 +20,13 @@ def csv_download(request, timer_pk=None):
     writer = csv.writer(response)
 
     writer.writerow(
-        ['start_time', 'stop_time', 'last_update_time',
+        ['activity.name', 'start_time', 'stop_time', 'last_update_time',
         'run_seconds', 'pause_seconds', 'is_running'])
 
     for timer in timers:
         writer.writerow(
-            [timer.start_time, timer.stop_time, timer.last_update_time,
-            timer.run_seconds, timer.pause_seconds, timer.is_running])
+            [timer.activity.name, timer.start_time, timer.stop_time,
+            timer.last_update_time, timer.run_seconds, timer.pause_seconds,
+            timer.is_running])
 
     return response

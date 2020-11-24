@@ -26,7 +26,7 @@ class TimerSerializer(serializers.ModelSerializer):
         model = Timer
         fields = ['id', 'activity', 'start_time', 'stop_time',
                   'last_update_time', 'run_seconds', 'pause_seconds',
-                  'is_paused']
+                  'is_running']
         read_only_fields = [
             'activity', 'start_time', 'stop_time', 'last_update_time',
-            'run_seconds', 'pause_seconds', 'is_paused']
+            'run_seconds', 'pause_seconds', 'is_running']

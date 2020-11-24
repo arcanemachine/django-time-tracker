@@ -30,3 +30,13 @@ class TimerSerializer(serializers.ModelSerializer):
         read_only_fields = [
             'activity', 'start_time', 'stop_time', 'last_update_time',
             'run_seconds', 'pause_seconds', 'is_running']
+
+    def to_representation(self, instance):
+        return {'id': instance.id,
+                'activity': instance.activity.pk,
+                'start_time': instance.start_time,
+                'stop_time': instance.stop_time,
+                'last_update_time': instance.last_update_time,
+                'run_seconds': instance.run_seconds,
+                'pause_seconds': instance.pause_seconds,
+                'is_running': instance.is_running}

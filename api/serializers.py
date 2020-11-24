@@ -11,10 +11,8 @@ class TimerUserSerializer(serializers.ModelSerializer):
         read_only_fields = ['username']
 
     def to_representation(self, instance):
-        return {
-            'id': instance.id,
-            'username': instance.username,
-            }
+        return {'id': instance.id,
+                'username': instance.username}
 
 
 class ActivitySerializer(serializers.ModelSerializer):

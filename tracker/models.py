@@ -28,6 +28,7 @@ class Timer(models.Model):
     pause_seconds = models.IntegerField(default=0)
 
     is_running = models.BooleanField(default=True)
+    is_tamper_proof = models.BooleanField(default=False)
 
     def get_seconds(self, elapsed_seconds):
         return int(elapsed_seconds)

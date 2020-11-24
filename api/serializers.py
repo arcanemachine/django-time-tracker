@@ -37,10 +37,9 @@ class TimerSerializer(serializers.ModelSerializer):
         def get_unix_time(time):
             return int(time.timestamp()) if time else None
 
-        formatted_start_time = get_unix_time(self.instance.start_time)
-        formatted_stop_time = get_unix_time(self.instance.stop_time)
-        formatted_last_update_time = \
-            get_unix_time(self.instance.last_update_time)
+        formatted_start_time = get_unix_time(instance.start_time)
+        formatted_stop_time = get_unix_time(instance.stop_time)
+        formatted_last_update_time = get_unix_time(instance.last_update_time)
 
         return {'id': instance.id,
                 'activity': instance.activity.pk,

@@ -59,7 +59,7 @@ class TimerCreate(APIView):
 
         if running_timer.exists() and running_timer.last().stop_time is None:
             return Response({
-                "id": running_timer.pk,
+                "id": running_timer.last().pk,
                 "status_code": "fail",
                 "message":
                     "Please stop the previous timer first."})

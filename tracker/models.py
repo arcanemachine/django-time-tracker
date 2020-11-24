@@ -47,6 +47,13 @@ class Timer(models.Model):
     def get_formatted_hours(self, elapsed_seconds):
         return str(int(self.get_hours(elapsed_seconds) % 24)).zfill(2)
 
+    def get_localized_time(self, time):
+        user = self.activity.user
+        if user and user.timezone:
+            return time.astimezone(user.timezone)
+        else:
+            return time
+
     def get_days(self, elapsed_seconds):
         return int(elapsed_seconds / 86_400)
 

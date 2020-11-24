@@ -64,7 +64,8 @@ class TimerCreate(APIView):
                 "message":
                     "Please stop the previous timer first."})
         else:
-            timer = Timer.objects.create(activity=activity)
+            timer = Timer.objects.create(activity=activity,
+                                         is_tamper_proof=True)
             return Response({
                 "id": timer.pk,
                 "status_code": "success",

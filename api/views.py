@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -48,7 +49,6 @@ class TimerDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.TimerSerializer
     queryset = Timer.objects.all()
     lookup_url_kwarg = 'timer_pk'
-
 
 class TimerCreate(APIView):
     serializer_class = serializers.TimerSerializer

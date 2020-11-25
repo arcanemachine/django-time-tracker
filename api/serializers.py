@@ -1,3 +1,5 @@
+import pytz
+from datetime import datetime
 from rest_framework import serializers
 
 from accounts.models import TimerUser
@@ -25,9 +27,28 @@ class ActivitySerializer(serializers.ModelSerializer):
 class TimerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Timer
-        fields = ['id', 'activity', 'start_time', 'stop_time',
-                  'last_update_time', 'run_seconds', 'pause_seconds',
+        fields = ['id',
+                  'activity',
+                  'start_time',
+                  'stop_time',
+                  'last_update_time',
+                  'run_seconds',
+                  'pause_seconds',
                   'is_running']
+
+    def to_internal_value(self, data):
+        UTC = pytz.timezone('UTC')
+        if data.get('start_time', None):
+            data['start_time'] = \
+                datetime.utcfromtimestamp(data['start_time']).astimezone(UTC)
+        if data.get('stop_time', None):
+            data['stop_time'] = \
+                datetime.utcfromtimestamp(data['stop_time']).astimezone(UTC)
+        if data.get('last_update_time', None):
+            data['last_update_time'] = \
+                datetime.utcfromtimestamp(
+                    data['last_update_time']).astimezone(UTC)
+        return data
 
     def to_representation(self, instance):
 

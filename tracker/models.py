@@ -24,8 +24,8 @@ class Timer(models.Model):
     start_time = models.DateTimeField(blank=True, null=True)
     stop_time = models.DateTimeField(blank=True, null=True)
     last_update_time = models.DateTimeField(blank=True, null=True)
-    run_seconds = models.IntegerField(default=0)
-    pause_seconds = models.IntegerField(default=0)
+    run_seconds = models.IntegerField(default=0, blank=True, null=True)
+    pause_seconds = models.IntegerField(default=0, blank=True, null=True)
 
     is_running = models.BooleanField(default=True)
     is_tamper_proof = models.BooleanField(default=False)
@@ -157,4 +157,8 @@ class Timer(models.Model):
         if not self.start_time:
             self.start_time = timezone.now()
             self.last_update_time = self.start_time
+        if not self.run_seconds:
+            self.run_seconds = 0
+        if not self.pause_seconds:
+            self.pause_seconds = 0
         super().save(*args, **kwargs)
